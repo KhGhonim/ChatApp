@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "checkJs": true,
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "resolveJsonModule": true,
+    "lib": [
+      "es6",
+      "dom",
+      "es2017"
+    ]
+  },
+  "include": [
+    "src",
+    "app",
+    "components",
+    "public",
+    "constants",
+    "utils",
+    "styles",
+    "pages",
+    "../Backend",
+    "../frontend",
+    "../backend"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}

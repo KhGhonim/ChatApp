@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --SliderBG: #f5f5f5;
+  --SliderBGHovr: #f5f5f571;
+  --UserName: #458cff;
+  --Text: #4b5563;
+  --TextHovr: #39414d;
+  --MessageSender: #DBEAFE;
+  --MessageReceiver: #4399ff;
+}
+
+.dark {
+
+  --SliderBG: #172338;
+  --SliderBGHovr: #20202071;
+  --UserName: #ff9945;
+  --Text: #b5b5b5;
+  --TextHovr: #d5d5d5;
+  --MessageSender: #1f354d;
+  --MessageReceiver: #ff6645;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.cloud-divider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #1e3a8a, #1d4ed8);
+}
+
+.cloud-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 100%;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(to left, #1e3a8a, #1d4ed8);
+  clip-path: polygon(100% 0%, 50% 25%, 75% 50%, 50% 75%, 100% 100%);
+}
+
+.cloud-divider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -100px;
+  width: 100px;
+  height: 100%;
+  background: #fff;
+  clip-path: polygon(0% 0%, 50% 25%, 25% 50%, 50% 75%, 0% 100%);
+}
