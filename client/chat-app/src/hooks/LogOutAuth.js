@@ -5,9 +5,10 @@ import { SignOut } from "../Redux/UserSlice";
 const useLogOutAuth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const API = process.env.REACT_APP_DB_URL
 
   const handleLogOut = async () => {
-    const res = await fetch("http://localhost:5000/api/auth/logout", {
+    const res = await fetch(`${API}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     });

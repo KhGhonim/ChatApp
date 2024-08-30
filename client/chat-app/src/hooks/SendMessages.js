@@ -10,13 +10,14 @@ const useSendMessages = () => {
     (state) => state.UserShop
   );
   const dispatch = useDispatch();
+  const API = process.env.REACT_APP_DB_URL
 
   const SendMessages = async (InputData) => {
     console.log(JSON.stringify({ InputData }));
     setIsSending(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/messages/sendMessage/${SelectedConversation._id}`,
+        `${API}/api/messages/sendMessage/${SelectedConversation._id}`,
         {
           method: "POST",
           credentials: "include",

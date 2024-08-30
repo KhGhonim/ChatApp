@@ -3,11 +3,11 @@ import toast from "react-hot-toast";
 
 const useGetLastMessage = () => {
   const [GetLastMessageData, setGetLastMessageData] = useState([]);
+  const API = process.env.REACT_APP_DB_URL
   const GetLastMessage = async () => {
 
-
     try {
-      const res = await fetch("http://localhost:5000/api/messages/latestMessages", {
+      const res = await fetch(`${API}/api/messages/latestMessages`, {
         method: "GET",
         credentials: "include",
         headers: {

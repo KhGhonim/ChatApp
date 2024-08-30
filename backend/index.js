@@ -6,13 +6,13 @@ import authRoutes from "./api/Routes/auth.route.js";
 import messageRoutes from "./api/Routes/messages.route.js";
 import userRoutes from "./api/Routes/user.route.js";
 import cookieParser from "cookie-parser";
-
-
+import dotenv from "dotenv";
+dotenv.config();
 
 const port = 5000
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", methods: ['GET', 'POST', 'PUT'], credentials: true }));
+app.use(cors({ origin: process.env.BASE_URL, methods: ['GET', 'POST', 'PUT'], credentials: true }));
 app.get('/', (req, res) => {
   res.send('Hello to KG Live Chat App!')
 })

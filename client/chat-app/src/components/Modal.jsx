@@ -16,6 +16,8 @@ export default function Modal({ setIsModalOpen }) {
   // @ts-ignore
   const { currentUser } = useSelector((state) => state.UserShop);
   const dispatch = useDispatch();
+  const API = process.env.REACT_APP_DB_URL
+
 
   const ImagePicker = (eo) => {
     let file = eo.target.files[0];
@@ -48,7 +50,7 @@ export default function Modal({ setIsModalOpen }) {
 
     console.log(formData);
     try {
-      const res = await fetch("http://localhost:5000/api/users/updateProfile", {
+      const res = await fetch(`${API}/api/users/updateProfile`, {
         method: "PUT",
         body: formData,
         credentials: "include",
@@ -72,7 +74,6 @@ export default function Modal({ setIsModalOpen }) {
     }
   };
 
-  console.log(ImageUrl);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="text-black bg-white rounded-lg shadow-lg p-6 mx-3 w-full max-w-md">

@@ -8,6 +8,7 @@ export const useSignIn = (FormData) => {
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const API = process.env.REACT_APP_DB_URL
 
   const handleSubmit = async (eo) => {
     eo.preventDefault();
@@ -29,7 +30,7 @@ export const useSignIn = (FormData) => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/signin", {
+      const res = await fetch(`${API}/api/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

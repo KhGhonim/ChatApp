@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 const useRegister = (FormData) => {
   const [loading, setLoading] = useState(false);
   const nevigate = useNavigate();
+
+  const API = process.env.REACT_APP_DB_URL
+
   const handleSubmit = async (eo) => {
     eo.preventDefault();
     if (!FormData.terms) {
@@ -37,7 +40,7 @@ const useRegister = (FormData) => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch(`${API}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

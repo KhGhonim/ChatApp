@@ -33,7 +33,7 @@ export default function ID({ UserContact }) {
       </div>
 
       <img
-        src="https://avatar.iran.liara.run/public"
+        src={SelectedConversation?.profilePic}
         alt="Profile Picture"
         className="rounded-full mb-4 w-32 object-cover h-32 hover:shadow-sm duration-300 ease-in-out transition-all"
       />

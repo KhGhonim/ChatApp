@@ -81,7 +81,7 @@ export const SignIn = async (req, res, next) => {
       const token = jwt.sign({ id: FindUser._id }, process.env.JWT_SECRET);
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== "production", // Set to true in production
+        secure: process.env.NODE_ENV === "production", // Set to true in production
         sameSite: "None", // Allows cross-site cookie sendingm
         maxAge: 3600000,
       });

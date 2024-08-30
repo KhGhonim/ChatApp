@@ -3,11 +3,12 @@ import toast from "react-hot-toast";
 
 const useGetUsers = () => {
   const [FetchedUsers, setFetchedUsers] = useState([]);
+  const API = process.env.REACT_APP_DB_URL
 
   const handleGetUsers = async () => {
 
     try {
-      const res = await fetch("http://localhost:5000/api/users/getUsers", {
+      const res = await fetch(`${API}/api/users/getUsers`, {
         method: "GET",
         credentials: "include",
       });

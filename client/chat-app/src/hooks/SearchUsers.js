@@ -3,11 +3,12 @@ import toast from "react-hot-toast";
 
 const useSearchUsers = () => {
   const [Users, setUsers] = useState([]);
+  const API = process.env.REACT_APP_DB_URL
 
   const SearchUsers = async (searchTerm) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/users/search?q=${searchTerm}`,
+        `${API}/api/users/search?q=${searchTerm}`,
         {
           method: "GET",
           credentials: "include",
