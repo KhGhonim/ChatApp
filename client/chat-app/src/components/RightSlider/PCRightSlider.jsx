@@ -22,7 +22,7 @@ export default function PCRightSlider({ setPhone }) {
           <img
             src={currentUser.profilePic}
             alt={currentUser.fullName}
-            className="w-12 h-12 object-cover"
+            className="w-12 h-12 object-cover rounded-full"
           />
           <div>
             <h2 className="text-lg font-semibold text-[--UserName]">

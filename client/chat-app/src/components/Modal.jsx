@@ -89,7 +89,6 @@ export default function Modal({ setIsModalOpen }) {
               type="text"
               id="name"
               name="name"
-              defaultValue={currentUser?.fullName}
               className="mt-1 block w-full p-2 border border-input rounded-md outline-none "
               placeholder="Enter your name"
             />
@@ -102,7 +101,6 @@ export default function Modal({ setIsModalOpen }) {
               onChange={(e) => setNewEmailAdress(e.target.value)}
               type="email"
               id="email"
-              defaultValue={currentUser?.email}
               name="email"
               className="mt-1 block w-full p-2 border border-input rounded-md outline-none"
               placeholder="Enter your email"

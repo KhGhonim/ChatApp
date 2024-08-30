@@ -3,12 +3,15 @@ import useGetUsers from "../../hooks/GetUsers";
 import { useDispatch } from "react-redux";
 import { fetchMessages } from "../../Redux/MessagesSlice";
 import { UserDetails } from "../../Redux/UserSlice";
+import useGetLastMessage from "../../hooks/GetLastMessage";
 export default function Users({ setPhone }) {
   const { handleGetUsers, FetchedUsers } = useGetUsers();
+  const { GetLastMessage, GetLastMessageData } = useGetLastMessage();
 
   useEffect(() => {
     handleGetUsers();
-  }, []);
+    GetLastMessage();
+  }, [GetLastMessageData]);
   const dispatch = useDispatch();
   const HandleChat = (user) => {
     // @ts-ignore
@@ -34,7 +37,7 @@ export default function Users({ setPhone }) {
                   <img
                     src={user.profilePic}
                     alt={user.fullName}
-                    className="rounded-full mr-2 w-10  object-cover"
+                    className="rounded-full mr-2 w-10 h-10  object-cover"
                   />
 
                   {/* Active Indicator */}
@@ -47,7 +50,24 @@ export default function Users({ setPhone }) {
                       {user.fullName}
                     </span>
                     <span className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1">
-                      MessageText
+                      {GetLastMessageData.map((msgGroup) => {
+                        if (msgGroup.messages && msgGroup.messages.length > 0) {
+                          return msgGroup.messages.map((msg, index) => {
+                            return (
+                              msg.ReceiverID === user._id && (
+                                <p
+                                  key={index} // Use a unique key based on the message ID
+                                  className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1"
+                                >
+                                  {msg.message}
+                                </p>
+                              )
+                            );
+                          });
+                        }
+                        // If there are no messages, return null or any fallback UI
+                        return null;
+                      })}
                     </span>
                   </div>
                 </div>

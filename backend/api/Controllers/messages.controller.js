@@ -73,3 +73,15 @@ export const GetMessages = async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const GetLastMessage = async (req, res, next) => {
+  const { id } = req.user;
+
+  const lastmessage = await ConsversationsModel.find({
+    participants: { $all: [id] },
+  })
+    .select("messages")
+    .populate("messages");
+  res.status(200).json({ lastmessage });
+  
+}
