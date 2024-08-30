@@ -2,9 +2,7 @@
 // useRegister.js
 import { useState } from 'react';
 import toast from "react-hot-toast";
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { SignInSuccess } from '../Redux/UserSlice';
 
 const useRegister = (FormData) => {
   const [loading, setLoading] = useState(false);

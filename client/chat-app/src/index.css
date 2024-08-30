@@ -5,23 +5,25 @@
 
 :root {
   --SliderBG: #f5f5f5;
-  --SliderBGHovr: #f5f5f571;
+  --SliderBGHovr: #0000000e;
   --UserName: #458cff;
   --Text: #4b5563;
   --TextHovr: #39414d;
   --MessageSender: #DBEAFE;
   --MessageReceiver: #4399ff;
+  --ChatBG: #e6e3e3;
 }
 
 .dark {
 
   --SliderBG: #172338;
-  --SliderBGHovr: #20202071;
+  --SliderBGHovr: #202020;
   --UserName: #ff9945;
   --Text: #b5b5b5;
   --TextHovr: #d5d5d5;
   --MessageSender: #1f354d;
   --MessageReceiver: #ff6645;
+  --ChatBG: #1f354d;
 }
 
 html {

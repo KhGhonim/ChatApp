@@ -34,8 +34,8 @@ export const useSignIn = (FormData) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(FormData),
         credentials: "include",
+        body: JSON.stringify(FormData),
       });
       const data = await res.json();
 

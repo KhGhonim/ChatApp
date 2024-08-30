@@ -5,8 +5,7 @@ const { Schema, models } = mongoose;
 const MessagesSchema = new Schema(
   {
     message: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
 
@@ -17,7 +16,8 @@ const MessagesSchema = new Schema(
     },
 
     ReceiverID: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
 

@@ -9,11 +9,10 @@ import { BsFiletypeMp3 } from "react-icons/bs";
 export default function ID({ UserContact }) {
   const [SearchInsideContact, setSearchInsideContact] = useState("");
 
-
   return (
     <div
-      className={`flex flex-col items-center bg-[--SliderBG] text-[--Text] p-6 bg-background border-l shadow-md ${
-        UserContact ? "block" : "hidden"
+      className={` overflow-hidden flex flex-col items-center bg-[--SliderBG] text-[--Text] p-6 bg-background border-l shadow-md  transition-all duration-500 ease-in-out ${
+        UserContact ? "block translate-x-0" : "hidden translate-x-full"
       }`}
     >
       <div className="relative">
@@ -37,7 +36,7 @@ export default function ID({ UserContact }) {
       <h2 className="text-lg text-[--UserName]">UserName</h2>
       <p className="text-[--Text]">Junior Developer</p>
 
-      <div className="flex space-x-4 my-4">
+      <div className="flex space-x-4 my-4 relative">
         <button className="bg-[--MessageSender] text-[--MessageReceiver] text-xl p-4 rounded-full flex items-center">
           <CiChat1 />
         </button>

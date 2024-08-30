@@ -4,6 +4,7 @@ const initialState = {
   currentUser: null,
   loading: false,
   error: false,
+  SelectedConversation: null
 }
 
 export const UserSlice = createSlice({
@@ -14,7 +15,7 @@ export const UserSlice = createSlice({
       state.currentUser = null
       state.loading = false
       state.error = false
-
+      state.SelectedConversation = null
     },
 
     SignInSuccess: (state, action) => {
@@ -22,10 +23,14 @@ export const UserSlice = createSlice({
       state.loading = false
       state.error = false
     },
+    UserDetails: (state, action) => {
+      state.SelectedConversation = action.payload
+
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { SignInSuccess, SignOut } = UserSlice.actions
+export const { SignInSuccess, SignOut, UserDetails } = UserSlice.actions
 
 export default UserSlice.reducer

@@ -68,7 +68,7 @@ export const SignIn = async (req, res, next) => {
         message: "User does not exist"
       })
     }
-
+ 
     const checkPassword = await bcrypt.compare(password, FindUser.password)
     if (!checkPassword) {
       return res.status(400).json({
@@ -77,11 +77,11 @@ export const SignIn = async (req, res, next) => {
       })
     }
 
-    if (checkPassword && FindUser) {
+    if (FindUser && checkPassword) {
       const token = jwt.sign({ id: FindUser._id }, process.env.JWT_SECRET);
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Ensures secure cookie transmission
+        secure: process.env.NODE_ENV !== "production", // Set to true in production
         sameSite: "None", // Allows cross-site cookie sendingm
         maxAge: 3600000,
       });
@@ -101,4 +101,16 @@ export const SignIn = async (req, res, next) => {
     });
   }
 
+}
+
+
+export const LogOut = (req, res, next) => {
+
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    sameSite: "None",
+    expires: new Date(0),
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.status(200).json({ message: "Logged out successfully" });
 }
