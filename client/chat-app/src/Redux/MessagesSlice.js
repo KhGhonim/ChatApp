@@ -6,8 +6,10 @@ import toast from 'react-hot-toast';
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (user, { rejectWithValue }) => {
+    const API = import.meta.env.VITE_DB_URL;
+
     try {
-      const res = await fetch(`http://localhost:5000/api/messages/getMessages/${user}`, {
+      const res = await fetch(`${API}/api/messages/getMessages/${user}`, {
         method: 'GET',
         credentials: 'include',
       });
