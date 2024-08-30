@@ -9,7 +9,7 @@ export const useSignIn = (FormData) => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   // eslint-disable-next-line no-undef
-  const API = process.env.REACT_APP_DB_URL
+  const API = import.meta.env.VITE_DB_URL;
 
   const handleSubmit = async (eo) => {
     eo.preventDefault();
