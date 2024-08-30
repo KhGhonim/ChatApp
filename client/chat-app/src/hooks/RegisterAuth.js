@@ -8,6 +8,7 @@ const useRegister = (FormData) => {
   const [loading, setLoading] = useState(false);
   const nevigate = useNavigate();
 
+  // eslint-disable-next-line no-undef
   const API = process.env.REACT_APP_DB_URL
 
   const handleSubmit = async (eo) => {

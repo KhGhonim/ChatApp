@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 const useGetLastMessage = () => {
   const [GetLastMessageData, setGetLastMessageData] = useState([]);
+  // eslint-disable-next-line no-undef
   const API = process.env.REACT_APP_DB_URL
   const GetLastMessage = async () => {
 
