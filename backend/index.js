@@ -12,7 +12,7 @@ import cookieParser from "cookie-parser";
 const port = 5000
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", methods: ['GET', 'POST'], credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", methods: ['GET', 'POST', 'PUT'], credentials: true }));
 app.get('/', (req, res) => {
   res.send('Hello to KG Live Chat App!')
 })

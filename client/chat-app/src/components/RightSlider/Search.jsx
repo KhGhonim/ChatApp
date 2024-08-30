@@ -17,7 +17,6 @@ export default function Search({ setPhone }) {
     setPhone(true);
   };
 
-  console.log(Users)
   return (
     <div className="relative">
       <input

@@ -4,10 +4,13 @@ import { useSelector } from "react-redux";
 import Users from "./Users";
 import Search from "./Search";
 import ThemeToggleWithLogOut from "./ThemeToggleWithLogOut";
+import Modal from "../Modal";
+import { useState } from "react";
 
 export default function PCRightSlider({ setPhone }) {
   // @ts-ignore
   const { currentUser } = useSelector((state) => state.UserShop);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div
@@ -30,7 +33,11 @@ export default function PCRightSlider({ setPhone }) {
         </div>
 
         <div className="cursor-pointer">
-          <LuPenSquare size={20} className="text-[--Text]" />
+          <LuPenSquare
+            onClick={() => setIsModalOpen(true)}
+            size={20}
+            className="text-[--Text]"
+          />
         </div>
       </div>
 
@@ -45,6 +52,9 @@ export default function PCRightSlider({ setPhone }) {
 
       {/* Theme Toggle and Logout */}
       <ThemeToggleWithLogOut />
+
+      {/* Modal */}
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }

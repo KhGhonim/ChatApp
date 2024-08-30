@@ -4,10 +4,13 @@ import { useSelector } from "react-redux";
 import Users from "./Users";
 import Search from "./Search";
 import ThemeToggleWithLogOut from "./ThemeToggleWithLogOut";
+import { useState } from "react";
+import Modal from "../Modal";
 
 export default function RightSlider({ Phone, setPhone }) {
   // @ts-ignore
   const { currentUser } = useSelector((state) => state.UserShop);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div
@@ -21,7 +24,7 @@ export default function RightSlider({ Phone, setPhone }) {
           <img
             src={currentUser.profilePic}
             alt={currentUser.fullName}
-            className="w-12 h-12 object-cover"
+            className="w-12 h-12 object-cover rounded-full"
           />
           <div>
             <h2 className="text-lg font-semibold text-[--UserName]">
@@ -32,7 +35,11 @@ export default function RightSlider({ Phone, setPhone }) {
         </div>
 
         <div className="cursor-pointer">
-          <LuPenSquare size={20} className="text-[--Text]" />
+          <LuPenSquare
+            onClick={() => setIsModalOpen(true)}
+            size={20}
+            className="text-[--Text]"
+          />
         </div>
       </div>
 
@@ -47,6 +54,9 @@ export default function RightSlider({ Phone, setPhone }) {
 
       {/* Theme Toggle and Logout */}
       <ThemeToggleWithLogOut />
+
+      {/* Modal */}
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }

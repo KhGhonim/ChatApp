@@ -4,9 +4,7 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { FaSpinner } from "react-icons/fa";
 
-export default function ConPC({
-  UserContactHandler,
-}) {
+export default function ConPC({ UserContactHandler }) {
   const { FetchedMessages, loading, error } = useSelector(
     // @ts-ignore
     (state) => state.messages
@@ -46,11 +44,11 @@ export default function ConPC({
       <div className="flex flex-1 flex-col bg-[--ChatBG] rounded-2xl p-9 gap-2 mb-2">
         {FetchedMessages?.map((message, index) => (
           <div
-            className={`flex gap-2  ${
+            className={`flex ${
               message.ReceiverID === SelectedConversation._id
-                ? "justify-start"
-                : "justify-end"
-            }`}
+                ? ""
+                : "flex-row-reverse"
+            } gap-2  `}
             key={index}
           >
             <img
@@ -60,9 +58,15 @@ export default function ConPC({
                   : SelectedConversation.profilePic
               }
               alt={""}
-              className={`w-10 h-10 object-cover rounded-full`}
+              className={`w-10 h-10 object-cover rounded-full `}
             />
-            <div className={`w-full flex mb-2`}>
+            <div
+              className={`w-full flex mb-2 ${
+                message.ReceiverID === SelectedConversation._id
+                  ? "justify-start"
+                  : "justify-end"
+              } `}
+            >
               <p
                 className={`max-w-[45%] p-3 rounded-2xl ${
                   message.ReceiverID === SelectedConversation._id

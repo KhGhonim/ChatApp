@@ -27,10 +27,14 @@ export const UserSlice = createSlice({
       state.SelectedConversation = action.payload
 
     },
+    UserUpdate: (state, action) => {
+      state.currentUser = action.payload
+
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { SignInSuccess, SignOut, UserDetails } = UserSlice.actions
+export const { SignInSuccess, SignOut, UserDetails, UserUpdate } = UserSlice.actions
 
 export default UserSlice.reducer

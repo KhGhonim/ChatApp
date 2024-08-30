@@ -15,9 +15,9 @@ export default function ChatHeader({ UserContactHandler, setPhone }) {
         />
         <div className="flex items-center mb-1">
           <img
-            src="https://avatar.iran.liara.run/public"
+            src={SelectedConversation?.profilePic}
             alt=""
-            className="rounded-full w-10 mr-3 object-cover"
+            className="rounded-full w-10 h-10 mr-3 object-cover"
           />
           <h2
             onClick={() => UserContactHandler()}

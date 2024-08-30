@@ -5,9 +5,13 @@ import { IoDocument, IoPersonOutline } from "react-icons/io5";
 import { GrFavorite } from "react-icons/gr";
 import { PiVideoLight } from "react-icons/pi";
 import { BsFiletypeMp3 } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 export default function ID({ UserContact }) {
   const [SearchInsideContact, setSearchInsideContact] = useState("");
+
+  // @ts-ignore
+  const { SelectedConversation } = useSelector((state) => state.UserShop);
 
   return (
     <div
@@ -33,8 +37,10 @@ export default function ID({ UserContact }) {
         alt="Profile Picture"
         className="rounded-full mb-4 w-32 object-cover h-32 hover:shadow-sm duration-300 ease-in-out transition-all"
       />
-      <h2 className="text-lg text-[--UserName]">UserName</h2>
-      <p className="text-[--Text]">Junior Developer</p>
+      <h2 className="text-lg text-[--UserName]">
+        {SelectedConversation?.fullName}
+      </h2>
+      <p className="text-[--Text]">{SelectedConversation?.email}</p>
 
       <div className="flex space-x-4 my-4 relative">
         <button className="bg-[--MessageSender] text-[--MessageReceiver] text-xl p-4 rounded-full flex items-center">
