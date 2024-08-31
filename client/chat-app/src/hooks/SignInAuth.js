@@ -8,7 +8,7 @@ export const useSignIn = (FormData) => {
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  // eslint-disable-next-line no-undef
+  // @ts-ignore
   const API = import.meta.env.VITE_DB_URL;
 
   const handleSubmit = async (eo) => {

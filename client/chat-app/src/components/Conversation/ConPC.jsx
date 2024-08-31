@@ -3,6 +3,8 @@ import NoChatSelected from "../NoChatSelected ";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { FaSpinner } from "react-icons/fa";
+import useListenToMessages from "../../hooks/Socket.io";
+import { useEffect, useRef } from "react";
 
 export default function ConPC({ UserContactHandler }) {
   const { FetchedMessages, loading, error } = useSelector(
@@ -13,6 +15,19 @@ export default function ConPC({ UserContactHandler }) {
     // @ts-ignore
     (state) => state.UserShop
   );
+
+  const lastMessageRef = useRef(null);
+
+
+  useListenToMessages();
+
+
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [FetchedMessages]);
+
 
   const renderLoading = () => (
     <div className="h-screen flex justify-center items-center">
@@ -41,9 +56,10 @@ export default function ConPC({ UserContactHandler }) {
   const renderChatMessages = () => (
     <div className={`  mx-4 flex flex-col justify-between h-full`}>
       <ChatHeader UserContactHandler={UserContactHandler} setPhone={null} />
-      <div className="flex flex-1 flex-col bg-[--ChatBG] rounded-2xl p-9 gap-2 mb-2">
+      <div className="flex flex-1 flex-col bg-[--ChatBG] rounded-2xl p-9 gap-2 mb-2 overflow-y-scroll">
         {FetchedMessages?.map((message, index) => (
           <div
+            ref={lastMessageRef}
             className={`flex ${
               message.ReceiverID === SelectedConversation._id
                 ? ""

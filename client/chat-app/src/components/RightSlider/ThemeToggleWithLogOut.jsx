@@ -29,7 +29,7 @@ export default function ThemeToggleWithLogOut() {
 
   
   return (
-    <div className="absolute container mx-auto shadow-lg bottom-5 p-2 px-5 hover:shadow-2xl transition-all duration-300 ease-in-out  border-2  rounded-full flex justify-between w-10/12 ">
+    <div className=" container mx-auto mt-2 shadow-lg p-2 px-5 hover:shadow-2xl transition-all duration-300 ease-in-out  border-2  rounded-full flex justify-between w-10/12 ">
     {/* DarkMode */}
     {Theme === "light" ? (
       <span

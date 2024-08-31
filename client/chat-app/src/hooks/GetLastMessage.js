@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 const useGetLastMessage = () => {
   const [GetLastMessageData, setGetLastMessageData] = useState([]);
+  // @ts-ignore
   const API = import.meta.env.VITE_DB_URL;
   const GetLastMessage = async () => {
 
@@ -23,7 +24,7 @@ const useGetLastMessage = () => {
       }
 
       setGetLastMessageData(data.lastmessage);
-      console.log(GetLastMessageData)
+
     } catch (error) {
       console.log(error);
     }

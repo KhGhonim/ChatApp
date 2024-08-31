@@ -10,11 +10,10 @@ const useSendMessages = () => {
     (state) => state.UserShop
   );
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-undef
+  // @ts-ignore
   const API = import.meta.env.VITE_DB_URL;
 
   const SendMessages = async (InputData) => {
-    console.log(JSON.stringify({ InputData }));
     setIsSending(true);
     try {
       const res = await fetch(
@@ -35,10 +34,10 @@ const useSendMessages = () => {
         toast.error(data.message);
       }
 
-      toast.success("Message sent successfully");
       // @ts-ignore
       dispatch(fetchMessages(SelectedConversation._id));
       setIsSending(false);
+
     } catch (error) {
       console.log(error);
     } finally {

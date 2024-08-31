@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (user, { rejectWithValue }) => {
+    // @ts-ignore
     const API = import.meta.env.VITE_DB_URL;
 
     try {
@@ -33,19 +34,27 @@ const messagesSlice = createSlice({
     FetchedMessages: [],
     loading: false,
     error: null,
+    initialLoad: true,
+
   },
   reducers: {
-
+    addNewMessage: (state, action) => {
+      state.FetchedMessages.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.pending, (state) => {
-        state.loading = true;
+        if (state.initialLoad) {
+          state.loading = true;
+        }
         state.error = null;
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
         state.FetchedMessages = action.payload;
+        state.initialLoad = false; // Set initial load to false after the first fetch so that the user can see the messages immediately
+
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;
@@ -55,4 +64,5 @@ const messagesSlice = createSlice({
 });
 
 
+export const { addNewMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;

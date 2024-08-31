@@ -21,7 +21,7 @@ export default function Users({ setPhone }) {
   };
 
   return (
-    <>
+    <div className="w-full h-4/6 md:h-3/4 overflow-y-scroll  ">
       {FetchedUsers && FetchedUsers.length > 0 ? (
         FetchedUsers?.map((user, index) => {
           return (
@@ -30,9 +30,9 @@ export default function Users({ setPhone }) {
                 HandleChat(user);
               }}
               key={index}
-              className="mt-4 hover:bg-[--SliderBGHovr] hover:shadow-sm p-2 cursor-pointer rounded-xl transition-all duration-300 ease-in-out"
+              className="mt-4 hover:bg-[--SliderBGHovr] hover:shadow-sm p-2  cursor-pointer rounded-xl transition-all duration-300 ease-in-out  "
             >
-              <div className="flex items-center p-2 hover:bg-muted cursor-pointer justify-between">
+              <div className="flex items-center p-2  cursor-pointer justify-between">
                 <div className="flex flex-1 relative">
                   <img
                     src={user.profilePic}
@@ -49,26 +49,35 @@ export default function Users({ setPhone }) {
                     <span className="font-semibold text-[--UserName]">
                       {user.fullName}
                     </span>
-                    <span className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1">
-                      {GetLastMessageData.map((msgGroup) => {
-                        if (msgGroup.messages && msgGroup.messages.length > 0) {
-                          return msgGroup.messages.map((msg, index) => {
+                    {GetLastMessageData.map((msgGroup) => {
+                      if (msgGroup.messages && msgGroup.messages.length > 0) {
+                        // Create a map to store the last message for each SenderID
+                        const lastMessagesBySender = new Map();
+
+                        // Iterate over messages to find the last message for each SenderID
+                        msgGroup.messages.forEach((msg) => {
+                          if (msg.ReceiverID === user._id) {
+                            lastMessagesBySender.set(msg.SenderID, msg);
+                          }
+                        });
+
+                        // Now render the last message for each SenderID
+                        return Array.from(lastMessagesBySender.values()).map(
+                          (msg, index) => {
                             return (
-                              msg.ReceiverID === user._id && (
-                                <p
-                                  key={index} // Use a unique key based on the message ID
-                                  className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1"
-                                >
-                                  {msg.message}
-                                </p>
-                              )
+                              <p
+                                key={msg._id || index} // Use message ID if available, otherwise use index
+                                className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1"
+                              >
+                                {msg.message}
+                              </p>
                             );
-                          });
-                        }
-                        // If there are no messages, return null or any fallback UI
-                        return null;
-                      })}
-                    </span>
+                          }
+                        );
+                      }
+                      // If there are no messages, return null or any fallback UI
+                      return null;
+                    })}
                   </div>
                 </div>
 
@@ -90,6 +99,6 @@ export default function Users({ setPhone }) {
           No Users Found
         </p>
       )}
-    </>
+    </div>
   );
 }

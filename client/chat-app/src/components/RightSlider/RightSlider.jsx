@@ -16,7 +16,7 @@ export default function RightSlider({ Phone, setPhone }) {
     <div
       className={`${
         Phone ? "hidden" : "block"
-      } w-full text-xs md:text-base md:w-1/4 border-r border-border p-8 bg-[--SliderBG]  transition-all duration-300 ease-in-out relative`}
+      } w-full text-xs md:text-base md:w-1/4 border-r border-border p-6  bg-[--SliderBG]  transition-all duration-300 ease-in-out relative overflow-hidden `}
     >
       {/* Header */}
       <div className="flex items-center justify-between">

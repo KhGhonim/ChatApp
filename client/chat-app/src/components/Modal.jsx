@@ -16,7 +16,8 @@ export default function Modal({ setIsModalOpen }) {
   // @ts-ignore
   const { currentUser } = useSelector((state) => state.UserShop);
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-undef
+
+  // @ts-ignore
   const API = import.meta.env.VITE_DB_URL;
 
 
@@ -64,6 +65,8 @@ export default function Modal({ setIsModalOpen }) {
         return;
       }
       toast.success("Profile updated successfully.");
+      const updatedUser = data.updatedUser;
+      setImageUrl(updatedUser.profilePic);
       dispatch(UserUpdate(data.updatedUser));
       setIsloading(false);
       setIsModalOpen(false);

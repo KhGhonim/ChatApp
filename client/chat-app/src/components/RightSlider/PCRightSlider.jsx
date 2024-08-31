@@ -14,7 +14,7 @@ export default function PCRightSlider({ setPhone }) {
 
   return (
     <div
-      className={` w-full text-xs md:text-base md:w-1/4 border-r border-border p-8 bg-[--SliderBG]  transition-all duration-300 ease-in-out relative`}
+      className={` w-full text-xs md:text-base h-full md:w-1/4 border-r border-border p-8 bg-[--SliderBG]  transition-all duration-300 ease-in-out relative  `}
     >
       {/* Header */}
       <div className="flex items-center justify-between">

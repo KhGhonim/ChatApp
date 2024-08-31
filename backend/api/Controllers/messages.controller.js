@@ -1,15 +1,12 @@
+import { io } from "../../Socekt.io/Socket.io.js";
 import ConsversationsModel from "../Models/conversation.model.js";
 import MessagesModel from "../Models/message.model.js";
 
-/**
- * Send a message to a conversation.
- */
+
 export const SendMessage = async (req, res, next) => {
   const { InputData } = req.body;
   const { id: ReceiverID } = req.params;
   const { id: SenderID } = req.user;
-
-
 
   // Find or create a conversation with the sender and receiver
   let conversation = await ConsversationsModel.findOne({
@@ -36,8 +33,10 @@ export const SendMessage = async (req, res, next) => {
   // Save the conversation and the new message to the database
   await Promise.all([conversation.save(), newMessage.save()]);
 
-  // Send a success response
-  res.status(200).json({ message: "Message Sent" });
+  // Emit the new message to the receiver's socket
+  io.to(ReceiverID).emit("newMessage", newMessage);
+
+  res.status(201).json(newMessage);
 };
 
 /**
@@ -83,5 +82,5 @@ export const GetLastMessage = async (req, res, next) => {
     .select("messages")
     .populate("messages");
   res.status(200).json({ lastmessage });
-  
+
 }
