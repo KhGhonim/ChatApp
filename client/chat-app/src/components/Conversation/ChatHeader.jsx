@@ -1,15 +1,27 @@
 import { BsArrowDownLeft } from "react-icons/bs";
 import { CiPhone, CiSearch, CiVideoOn } from "react-icons/ci";
 import { useSelector } from "react-redux";
+import useSocket from "../../hooks/Socket.io";
 export default function ChatHeader({ UserContactHandler, setPhone }) {
   // @ts-ignore
-  const { SelectedConversation } = useSelector((state) => state.UserShop);
+  const { SelectedConversation, currentUser } = useSelector(
+    (state) => state.UserShop
+  );
+
+  const socket = useSocket();
+
   return (
     <div className="md:m-4 md:py-2 border-b flex justify-between items-center">
       <div className="  flex items-center gap-3">
         <BsArrowDownLeft
           onClick={() => {
             setPhone(false);
+            if (socket) {
+              socket.emit("leaveConversation", {
+                currentUserId: currentUser._id,
+                userId: SelectedConversation._id,
+              });
+            }
           }}
           className="md:hidden  text-[--Text] hover:shadow-sm cursor-pointer text-2xl md:text-3xl hover:text-[--MessageReceiver] transition-all duration-300 ease-in-out"
         />

@@ -23,6 +23,11 @@ export default function Conversation({ UserContactHandler, setPhone, Phone }) {
     }
   }, [FetchedMessages]);
 
+;
+
+
+
+
   const renderLoading = () => (
     <div className="h-screen flex justify-center items-center">
       <FaSpinner className="animate-spin" />

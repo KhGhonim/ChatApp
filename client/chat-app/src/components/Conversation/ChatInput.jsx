@@ -6,6 +6,8 @@ import { FaSpinner } from "react-icons/fa";
 import EmojiPicker from "emoji-picker-react";
 import useSendMessages from "../../hooks/SendMessages";
 import { useEffect, useRef, useState } from "react";
+import useSocket from "../../hooks/Socket.io";
+import { useSelector } from "react-redux";
 
 export default function ChatInput() {
   const [Message, setMessage] = useState("");
@@ -26,8 +28,24 @@ export default function ChatInput() {
     };
   }, [EmojiHook]);
 
+  const { SelectedConversation, currentUser } = useSelector(
+    // @ts-ignore
+    (state) => state.UserShop
+  );
+
+  const socket = useSocket();
+
+
+
   const HandleChatInput = (message) => {
     SendMessages(message);
+    if (socket) {
+      socket.emit("message", {
+        message: message,
+        currentUserId: currentUser._id,
+        userId: SelectedConversation._id,
+      });
+    }
     setMessage("");
   };
 
@@ -58,7 +76,7 @@ export default function ChatInput() {
               ref={EmojiHook}
             >
               <EmojiPicker
-              width={"250px"}
+                width={"250px"}
                 height={"350px"}
                 searchDisabled={true}
                 lazyLoadEmojis={true}

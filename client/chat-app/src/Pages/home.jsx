@@ -4,6 +4,7 @@ import ID from "../components/ID";
 import RightSlider from "../components/RightSlider/RightSlider";
 import PCRightSlider from "../components/RightSlider/PCRightSlider";
 import ConPC from "../components/Conversation/ConPC";
+import useSocket from "../hooks/Socket.io";
 export default function Home() {
   const [UserContact, setUserContact] = useState(false);
   const UserContactHandler = () => {
@@ -23,7 +24,8 @@ export default function Home() {
     };
   }, []);
 
-
+  useSocket(); 
+  
   return (
     <div className="flex h-screen bg-gray-100">
       {!isLargeScreen ? (

@@ -1,45 +1,42 @@
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { useDispatch, useSelector } from "react-redux";
-import { addNewMessage } from "../Redux/MessagesSlice";
-import notificationSound from "../assets/notfiy.mp3";
-import { useEffect } from "react";
+import useGetLastMessage from "./GetLastMessage";
 
-const useListenToMessages = () => {
-  const dispatch = useDispatch();
-  const { currentUser } = useSelector(
-    // @ts-ignore
-    (state) => state.UserShop
-  );
-  // @ts-ignore
-  const SocketIO = import.meta.env.VITE_SOCKET_URL;
 
+const useSocket = () => {
+  const [socket, setSocket] = useState(null);
+
+  useGetLastMessage();
   useEffect(() => {
-    if (!SocketIO && !currentUser) return;
+    const newSocket = io(import.meta.env.VITE_SOCKET_URL, {
+      withCredentials: true,
+      transports: ["websocket"], // Ensure WebSocket transport is used
+    });
 
-    if (currentUser) {
-      const socket = io(SocketIO);
+    newSocket.on("connect", () => {
+      console.log("Connected to server:", newSocket.id);
+    });
 
-      socket.on("connect", () => {
-        console.log("Connected to Socket.IO via socket:", socket.id);
-      });
+    
 
-      socket.on("newMessage", (message) => {
-        console.log("Received new message via socket:", message);
+    newSocket.on("Sendmessage", (message) => {
+      console.log("Message received from server:", message);
+      
 
-        const audio = new Audio(notificationSound);
-        audio.play();
-        dispatch(addNewMessage(message));
-      });
-    }
-    return () => {
-      if (currentUser) {
-        const socket = io(SocketIO);
-        socket.disconnect();
-      }
-    };
-  }, [SocketIO, currentUser, dispatch]);
+    });
 
 
+    newSocket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
+
+    setSocket(newSocket);
+
+
+    return () => newSocket.close();
+  }, []);
+
+  return socket;
 }
 
-export default useListenToMessages
+export default useSocket;

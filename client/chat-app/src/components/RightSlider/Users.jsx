@@ -1,21 +1,33 @@
 import { useEffect } from "react";
 import useGetUsers from "../../hooks/GetUsers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages } from "../../Redux/MessagesSlice";
 import { UserDetails } from "../../Redux/UserSlice";
 import useGetLastMessage from "../../hooks/GetLastMessage";
+import useSocket from "../../hooks/Socket.io";
 export default function Users({ setPhone }) {
   const { handleGetUsers, FetchedUsers } = useGetUsers();
   const { GetLastMessage, GetLastMessageData } = useGetLastMessage();
+
+  const { currentUser } = useSelector(
+    // @ts-ignore
+    (state) => state.UserShop
+  );
 
   useEffect(() => {
     handleGetUsers();
     GetLastMessage();
   }, [GetLastMessageData]);
   const dispatch = useDispatch();
-
+  const socket = useSocket();
 
   const HandleChat = (user) => {
+    if (socket) {
+      socket.emit("joinConversation", {
+        currentUserId: currentUser._id,
+        userId: user._id        ,
+      });
+    }
     // @ts-ignore
     dispatch(fetchMessages(user._id));
     dispatch(UserDetails(user));
