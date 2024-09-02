@@ -3,7 +3,6 @@ import NoChatSelected from "../NoChatSelected ";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { FaSpinner } from "react-icons/fa";
-import useListenToMessages from "../../hooks/Socket.io";
 import { useEffect, useRef } from "react";
 
 export default function ConPC({ UserContactHandler }) {
@@ -18,16 +17,11 @@ export default function ConPC({ UserContactHandler }) {
 
   const lastMessageRef = useRef(null);
 
-
-  useListenToMessages();
-
-
   useEffect(() => {
     if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [FetchedMessages]);
-
 
   const renderLoading = () => (
     <div className="h-screen flex justify-center items-center">

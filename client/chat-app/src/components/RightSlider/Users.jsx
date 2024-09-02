@@ -13,6 +13,8 @@ export default function Users({ setPhone }) {
     GetLastMessage();
   }, [GetLastMessageData]);
   const dispatch = useDispatch();
+
+
   const HandleChat = (user) => {
     // @ts-ignore
     dispatch(fetchMessages(user._id));

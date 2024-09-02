@@ -10,13 +10,12 @@ export const useSignIn = (FormData) => {
   const dispatch = useDispatch()
   // @ts-ignore
   const API = import.meta.env.VITE_DB_URL;
-
   const handleSubmit = async (eo) => {
     eo.preventDefault();
     setloading(true);
     if (
-      FormData.email === "" ||
-      FormData.password === ""
+      !FormData.email ||
+      !FormData.password
     ) {
       toast.error("Please fill all the fields");
       setloading(false);

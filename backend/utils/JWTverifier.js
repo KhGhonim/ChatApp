@@ -16,6 +16,19 @@ export default function JWTverifier(req, res, next) {
           message: "Invalid Token",
         });
       }
+
+      const remainingTime = user.exp * 1000 - Date.now();
+      if (remainingTime < 600000) {
+        const newToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.cookie("jwt", newToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "production",
+          sameSite: "None",
+          maxAge: 3600000,
+        });
+      }
+
       req.user = user;
       next();
     });

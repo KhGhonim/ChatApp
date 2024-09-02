@@ -78,10 +78,10 @@ export const SignIn = async (req, res, next) => {
     }
 
     if (FindUser && checkPassword) {
-      const token = jwt.sign({ id: FindUser._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: FindUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Set to true in production
+        secure: process.env.NODE_ENV !== "production", // Set to true in production
         sameSite: "None", // Allows cross-site cookie sendingm
         maxAge: 3600000,
       });
@@ -110,7 +110,7 @@ export const LogOut = (req, res, next) => {
     httpOnly: true,
     sameSite: "None",
     expires: new Date(0),
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV !== "production",
   });
   res.status(200).json({ message: "Logged out successfully" });
 }

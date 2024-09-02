@@ -1,4 +1,3 @@
-import { io } from "../../Socekt.io/Socket.io.js";
 import ConsversationsModel from "../Models/conversation.model.js";
 import MessagesModel from "../Models/message.model.js";
 
@@ -33,9 +32,7 @@ export const SendMessage = async (req, res, next) => {
   // Save the conversation and the new message to the database
   await Promise.all([conversation.save(), newMessage.save()]);
 
-  // Emit the new message to the receiver's socket
-  io.to(ReceiverID).emit("newMessage", newMessage);
-
+   
   res.status(201).json(newMessage);
 };
 
