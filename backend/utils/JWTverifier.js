@@ -23,7 +23,7 @@ export default function JWTverifier(req, res, next) {
 
         res.cookie("jwt", newToken, {
           httpOnly: true,
-          secure: process.env.NODE_ENV !== "production",
+          secure: process.env.NODE_ENV === "production",
           sameSite: "None",
           maxAge: 3600000,
         });
