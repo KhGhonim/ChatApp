@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 const useGetUsers = () => {
   const [FetchedUsers, setFetchedUsers] = useState([]);
-  // eslint-disable-next-line no-undef
+  // @ts-ignore
   const API = import.meta.env.VITE_DB_URL;
 
   const handleGetUsers = async () => {

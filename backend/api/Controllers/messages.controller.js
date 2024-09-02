@@ -1,5 +1,6 @@
 import ConsversationsModel from "../Models/conversation.model.js";
 import MessagesModel from "../Models/message.model.js";
+import {  io } from "../Socket/socket.js";
 
 
 export const SendMessage = async (req, res, next) => {
@@ -16,7 +17,6 @@ export const SendMessage = async (req, res, next) => {
       participants: [SenderID, ReceiverID],
     });
   }
-
   // Create a new message with the content, sender ID, and receiver ID
   const newMessage = await MessagesModel.create({
     message: InputData,
@@ -32,7 +32,9 @@ export const SendMessage = async (req, res, next) => {
   // Save the conversation and the new message to the database
   await Promise.all([conversation.save(), newMessage.save()]);
 
-   
+  // Emit the new message to the receiver's socket
+  io.to(ReceiverID).emit("message", { message: newMessage, notify: true });
+
   res.status(201).json(newMessage);
 };
 

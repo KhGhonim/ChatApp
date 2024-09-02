@@ -7,7 +7,7 @@ import userRoutes from "./api/Routes/user.route.js";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import http from 'http'; 
-import initializeSocket from './api/Socket/socket.js';
+import { initializeSocket } from './api/Socket/socket.js';
 
 
 dotenv.config();
@@ -16,7 +16,7 @@ const app = express();
 
 // Use CORS middleware for Express routes
 app.use(cors({
-  origin: process.env.BASE_URL,
+  origin: process.env.DEV_URL,
   methods: ['GET', 'POST', 'PUT'],
   credentials: true
 }));

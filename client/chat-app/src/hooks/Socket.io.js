@@ -1,42 +1,59 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import useGetLastMessage from "./GetLastMessage";
-
+// @ts-ignore
+import notfiy from '../assets/notfiy.mp3'
+import { addMessage } from "../Redux/MessagesSlice";
 
 const useSocket = () => {
   const [socket, setSocket] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  // @ts-ignore
+  const { FetchedMessages } = useSelector((state) => state.messages);
 
-  useGetLastMessage();
+  // @ts-ignore
+  const { currentUser: { _id: userId } } = useSelector((state) => state.UserShop);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const newSocket = io(import.meta.env.VITE_SOCKET_URL, {
+    // @ts-ignore
+    const newSocket = io(import.meta.env.VITE_DB_URL, {
       withCredentials: true,
-      transports: ["websocket"], // Ensure WebSocket transport is used
-    });
-
-    newSocket.on("connect", () => {
-      console.log("Connected to server:", newSocket.id);
-    });
-
-    
-
-    newSocket.on("Sendmessage", (message) => {
-      console.log("Message received from server:", message);
-      
+      transports: ["websocket"],
+      query: { userId },
 
     });
 
+    // Handle receiving new messages
+    newSocket.on("message", (message) => {
+      if (message.message.ReceiverID === userId && message.notify) {
+        const audio = new Audio(notfiy);
+        audio.play();
+      }
 
-    newSocket.on("disconnect", () => {
-      console.log("Disconnected from server");
+      dispatch(addMessage(message.message));
+
     });
+
+    console.log(FetchedMessages)
+
+    // Handle receiving online users list
+    newSocket.on("getOnlineUsers", (users) => {
+      setOnlineUsers(users.filter((user) => user !== userId));
+    });
+
+
+
 
     setSocket(newSocket);
 
+    return () => {
+      if (newSocket) newSocket.close();
+    };
+  }, [FetchedMessages, dispatch, userId]);
 
-    return () => newSocket.close();
-  }, []);
 
-  return socket;
-}
+  return { socket, onlineUsers };
+};
 
 export default useSocket;

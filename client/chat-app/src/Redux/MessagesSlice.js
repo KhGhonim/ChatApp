@@ -38,8 +38,8 @@ const messagesSlice = createSlice({
 
   },
   reducers: {
-    addNewMessage: (state, action) => {
-      state.FetchedMessages.push(action.payload);
+    addMessage: (state, action) => {
+      state.FetchedMessages = [...state.FetchedMessages, action.payload];
     },
   },
   extraReducers: (builder) => {
@@ -63,6 +63,6 @@ const messagesSlice = createSlice({
   },
 });
 
+export const { addMessage } = messagesSlice.actions;
 
-export const { addNewMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;

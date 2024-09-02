@@ -15,6 +15,12 @@ const useSendMessages = () => {
 
   const SendMessages = async (InputData) => {
     setIsSending(true);
+
+    if (!InputData) {
+      toast.error("Please enter a message");
+      setIsSending(false);
+      return;
+    }
     try {
       const res = await fetch(
         `${API}/api/messages/sendMessage/${SelectedConversation._id}`,

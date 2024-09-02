@@ -1,60 +1,48 @@
-// api/socket/socket.js
 import { Server } from "socket.io";
-import ConsversationsModel from "../Models/conversation.model.js";
+let io;
+const userSocketMap = {};
 
-const initializeSocket = (server) => {
-  const io = new Server(server, {
+// Function to get the receiver's socket ID
+export const getReceiverSocketId = (receiverId) => {
+  return userSocketMap[receiverId];
+};
+
+export const initializeSocket = (server) => {
+  io = new Server(server, {
     cors: {
-      origin: process.env.DEV_URL,  // Allow CORS for your frontend URL
+      origin: process.env.DEV_URL,
       methods: ["GET", "POST"],
       credentials: true
     }
   });
 
-  // Handle socket connections
   io.on("connection", (socket) => {
     console.log(`User connected: ${socket.id}`);
-    
 
-    // Listen for joinConversation event
-    socket.on("joinConversation", ({ currentUserId, userId }) => {
+    const userId = socket.handshake.query.userId;
+
+    if (userId && userId !== "undefined") {
+      userSocketMap[userId] = socket.id;
       socket.join(userId);
-      console.log(`User ${currentUserId} joined conversation with user ${userId}`)
-    });
+    }
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
-    // Listen for leaveConversation event
-    socket.on("leaveConversation", ({ currentUserId, userId }) => {
-      console.log(`User ${currentUserId} left conversation with user ${userId}`)
-    });
-
-
-
-    // Add event listeners here
-    socket.on("message", async (data) => {
-      let conversationId = await ConsversationsModel.findOne({
-        participants: { $all: [data.currentUserId, data.userId] },
-      });
-      if (data.userId) {
-      
-
-        if (conversationId) {
-          io.to(conversationId._id).emit("Sendmessage", data.message);
-          console.log("Message sent to user:", data.userId);
-        } else {
-          console.error('Conversation not found.');
-        }
-      } else {
-        console.log('User ID is not defined or user is not connected.');
-      }
-    });
-
-    // Handle disconnect
     socket.on("disconnect", () => {
       console.log(`User disconnected: ${socket.id}`);
+      // Remove user from userSocketMap on disconnect so to be able to re-connect
+      Object.keys(userSocketMap).forEach(userId => {
+        if (userSocketMap[userId] === socket.id) {
+          delete userSocketMap[userId];
+        }
+      });
+    });
+
+    socket.on("error", (error) => {
+      console.error("Socket error:", error);
     });
   });
 
   return io;
 };
-
-export default initializeSocket;
+// Export the io instance so it can be used in other files
+export { io };

@@ -2,13 +2,16 @@ import { BsArrowDownLeft } from "react-icons/bs";
 import { CiPhone, CiSearch, CiVideoOn } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import useSocket from "../../hooks/Socket.io";
+import { useEffect } from "react";
 export default function ChatHeader({ UserContactHandler, setPhone }) {
-  // @ts-ignore
   const { SelectedConversation, currentUser } = useSelector(
+    // @ts-ignore
     (state) => state.UserShop
   );
 
-  const socket = useSocket();
+  const { socket, onlineUsers } = useSocket();
+
+  useEffect(() => {}, [onlineUsers]);
 
   return (
     <div className="md:m-4 md:py-2 border-b flex justify-between items-center">
@@ -25,7 +28,7 @@ export default function ChatHeader({ UserContactHandler, setPhone }) {
           }}
           className="md:hidden  text-[--Text] hover:shadow-sm cursor-pointer text-2xl md:text-3xl hover:text-[--MessageReceiver] transition-all duration-300 ease-in-out"
         />
-        <div className="flex items-center mb-1">
+        <div className="flex justify-center items-center mb-1">
           <img
             src={SelectedConversation?.profilePic}
             alt=""
@@ -40,7 +43,13 @@ export default function ChatHeader({ UserContactHandler, setPhone }) {
         </div>
 
         {/* Active Indicator */}
-        <div className="text-green-500">●</div>
+        <div
+          className={` ${
+            onlineUsers.includes(SelectedConversation?._id) && "text-green-500"
+          }`}
+        >
+          ●
+        </div>
       </div>
 
       {/* Icons */}

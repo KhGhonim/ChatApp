@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   error: false,
   SelectedConversation: null,
+  OnlineUsers: null
 }
 
 export const UserSlice = createSlice({

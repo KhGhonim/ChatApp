@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import useGetUsers from "../../hooks/GetUsers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchMessages } from "../../Redux/MessagesSlice";
 import { UserDetails } from "../../Redux/UserSlice";
 import useGetLastMessage from "../../hooks/GetLastMessage";
@@ -9,30 +9,21 @@ export default function Users({ setPhone }) {
   const { handleGetUsers, FetchedUsers } = useGetUsers();
   const { GetLastMessage, GetLastMessageData } = useGetLastMessage();
 
-  const { currentUser } = useSelector(
-    // @ts-ignore
-    (state) => state.UserShop
-  );
-
   useEffect(() => {
     handleGetUsers();
     GetLastMessage();
-  }, [GetLastMessageData]);
+  }, [FetchedUsers]);
   const dispatch = useDispatch();
-  const socket = useSocket();
 
   const HandleChat = (user) => {
-    if (socket) {
-      socket.emit("joinConversation", {
-        currentUserId: currentUser._id,
-        userId: user._id        ,
-      });
-    }
     // @ts-ignore
     dispatch(fetchMessages(user._id));
     dispatch(UserDetails(user));
     setPhone(true);
   };
+
+  const { onlineUsers } = useSocket();
+  useEffect(() => {}, [onlineUsers]);
 
   return (
     <div className="w-full h-4/6 md:h-3/4 overflow-y-scroll  ">
@@ -55,7 +46,13 @@ export default function Users({ setPhone }) {
                   />
 
                   {/* Active Indicator */}
-                  <div className="text-green-500 text-3xl absolute -top-5 left-0">
+                  <div
+                    className={`text-green-500 text-3xl absolute -top-5 left-0 ${
+                      onlineUsers && onlineUsers.includes(user._id)
+                        ? "block"
+                        : "hidden"
+                    }`}
+                  >
                     ●
                   </div>
 
