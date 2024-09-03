@@ -36,7 +36,7 @@ export const Register = async (req, res, next) => {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const newUser = await UserModel.create({ fullName, email, password: hashedPassword, gender, profilePic: "https://avatar.iran.liara.run/public" })
+  const newUser = await UserModel.create({ fullName, email, password: hashedPassword, gender, profilePic: `https://avatar.iran.liara.run/username?username=${fullName}` })
   res.status(200).json({ newUser })
 
 

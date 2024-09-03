@@ -29,6 +29,16 @@ export default function Users({ setPhone }) {
     <div className="w-full h-4/6 md:h-3/4 overflow-y-scroll  ">
       {FetchedUsers && FetchedUsers.length > 0 ? (
         FetchedUsers?.map((user, index) => {
+          const lastMessageData =
+            GetLastMessageData[index]?.messages[
+              GetLastMessageData[index]?.messages?.length - 1
+            ]?.createdAt;
+          const date = new Date(lastMessageData);
+          const formattedDateTime = date.toLocaleString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
           return (
             <div
               onClick={() => {
@@ -61,72 +71,25 @@ export default function Users({ setPhone }) {
                       {user.fullName}
                     </span>
 
-
                     {GetLastMessageData && GetLastMessageData.length > 0 ? (
-                    
-                    <div>
-                      {GetLastMessageData[index]?.messages && GetLastMessageData[index]?.messages.length > 0 ? (
-                        <p
-                          className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1"
-                        >
-                          {GetLastMessageData[index].messages[0].message}
-                        </p>
-                      ) : null}
-                    </div>
+                      <div>
+                        {GetLastMessageData[index]?.messages &&
+                        GetLastMessageData[index]?.messages.length > 0 ? (
+                          <p className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1">
+                            {GetLastMessageData[index]?.messages[index]?.message}
+                          </p>
+                        ) : null}
+                      </div>
                     ) : null}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    {/* {GetLastMessageData.map((msgGroup) => {
-                      if (msgGroup.messages && msgGroup.messages.length > 0) {
-                        // Create a map to store the last message for each SenderID
-                        const lastMessagesBySender = new Map();
-
-                        // Iterate over messages to find the last message for each SenderID
-                        msgGroup.messages.forEach((msg) => {
-                          if (msg.ReceiverID === user._id) {
-                            lastMessagesBySender.set(msg.SenderID, msg);
-                          }
-                        });
-
-                        // Now render the last message for each SenderID
-                        return Array.from(lastMessagesBySender.values()).map(
-                          (msg, index) => {
-                            return (
-                              <p
-                                key={msg._id || index} // Use message ID if available, otherwise use index
-                                className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1"
-                              >
-                                {msg.message}
-                              </p>
-                            );
-                          }
-                        );
-                      }
-                      // If there are no messages, return null or any fallback UI
-                      return null;
-                    })} */}
                   </div>
                 </div>
 
                 {/* Time and Unread Message Count */}
                 <div>
                   <span className="text-xs text-[--Text] ml-auto">
-                    10:35 AM
-                  </span>
-                  <span className="bg-[--MessageReceiver] text-white rounded-full px-1 text-xs ml-2">
-                    1
+                    {formattedDateTime !== "Invalid Date"
+                      ? formattedDateTime
+                      : null}
                   </span>
                 </div>
               </div>
