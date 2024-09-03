@@ -26,6 +26,9 @@ export default function ChatInput() {
     };
   }, [EmojiHook]);
 
+
+  
+
   const HandleChatInput = (message) => {
     SendMessages(message);
     setMessage("");

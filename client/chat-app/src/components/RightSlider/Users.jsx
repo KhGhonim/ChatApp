@@ -5,6 +5,7 @@ import { fetchMessages } from "../../Redux/MessagesSlice";
 import { UserDetails } from "../../Redux/UserSlice";
 import useGetLastMessage from "../../hooks/GetLastMessage";
 import useSocket from "../../hooks/Socket.io";
+
 export default function Users({ setPhone }) {
   const { handleGetUsers, FetchedUsers } = useGetUsers();
   const { GetLastMessage, GetLastMessageData } = useGetLastMessage();
@@ -12,7 +13,7 @@ export default function Users({ setPhone }) {
   useEffect(() => {
     handleGetUsers();
     GetLastMessage();
-  }, [FetchedUsers]);
+  }, []);
   const dispatch = useDispatch();
 
   const HandleChat = (user) => {
@@ -21,7 +22,6 @@ export default function Users({ setPhone }) {
     dispatch(UserDetails(user));
     setPhone(true);
   };
-
   const { onlineUsers } = useSocket();
   useEffect(() => {}, [onlineUsers]);
 
@@ -60,7 +60,35 @@ export default function Users({ setPhone }) {
                     <span className="font-semibold text-[--UserName]">
                       {user.fullName}
                     </span>
-                    {GetLastMessageData.map((msgGroup) => {
+
+
+                    {GetLastMessageData && GetLastMessageData.length > 0 ? (
+                    
+                    <div>
+                      {GetLastMessageData[index]?.messages && GetLastMessageData[index]?.messages.length > 0 ? (
+                        <p
+                          className="text-xs text-[--Text] text-start overflow-hidden line-clamp-1"
+                        >
+                          {GetLastMessageData[index].messages[0].message}
+                        </p>
+                      ) : null}
+                    </div>
+                    ) : null}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    {/* {GetLastMessageData.map((msgGroup) => {
                       if (msgGroup.messages && msgGroup.messages.length > 0) {
                         // Create a map to store the last message for each SenderID
                         const lastMessagesBySender = new Map();
@@ -88,7 +116,7 @@ export default function Users({ setPhone }) {
                       }
                       // If there are no messages, return null or any fallback UI
                       return null;
-                    })}
+                    })} */}
                   </div>
                 </div>
 

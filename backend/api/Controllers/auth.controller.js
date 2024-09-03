@@ -51,7 +51,7 @@ export const SignIn = async (req, res, next) => {
       message: "Please fill all the fields"
     })
   }
- 
+
   if (password.length < 6) {
     return res.status(400).json({
       success: false,
@@ -68,7 +68,7 @@ export const SignIn = async (req, res, next) => {
         message: "User does not exist"
       })
     }
- 
+
     const checkPassword = await bcrypt.compare(password, FindUser.password)
     if (!checkPassword) {
       return res.status(400).json({

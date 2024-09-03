@@ -30,20 +30,13 @@ const useSocket = () => {
         const audio = new Audio(notfiy);
         audio.play();
       }
-
       dispatch(addMessage(message.message));
-
     });
-
-    console.log(FetchedMessages)
 
     // Handle receiving online users list
     newSocket.on("getOnlineUsers", (users) => {
       setOnlineUsers(users.filter((user) => user !== userId));
     });
-
-
-
 
     setSocket(newSocket);
 
